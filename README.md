@@ -1,69 +1,64 @@
-# 🕌 Tawf Research Repository
+# Contributions to Privacy-Preserving Zakat and Islamic Social Finance on Blockchain
 
-**The official research repository for Tawf.**
+- **Zero-Knowledge Zakat: Auditable Private Donations**
+  - [Technical Paper (IEEE ICIMTech 2026)](https://github.com/tawf-labs/zkt-research/blob/main/zk-private-zakat.pdf)
+  - [LaTeX Source](https://github.com/tawf-labs/zkt-research/blob/main/zk-private-zakat.tex)
+  - [Live Testnet (Sepolia)](https://ziswaf.tawf.foundation)
+  - [Smart Contract Source & Benchmarks](https://github.com/tawf-labs/zkt-research/tree/main/sc)
+  - Performance: UltraHONK (270ms prove, 10ms verify, 8,384-byte proof); Foundry gas reports (v9)
 
-This repository serves as the central knowledge base for all research, papers, and references supporting the development of **Tawf’s Sharia-compliant framework and Web3 infrastructure**.
+- **Zero-Knowledge Private Zakat: Privacy-Preserving Donation Protocol**
+  - [Draft Paper](https://github.com/tawf-labs/zkt-research/blob/main/zkdid.tex)
+  - Aztec Network-based protocol, Noir circuits, nullifier mechanism, selective disclosure
+  - Circuit benchmarks: UltraHONK (452ms prove, 89ms verify); Base Sepolia gas measurements
 
-## 🎯 Purpose
+- **Solana ZK Layer: Groth16 Eligibility Circuit**
+  - [Circom Circuit (`zakat_eligibility`)](https://github.com/tawf-labs/zkt-research/blob/main/solana/circuits/zakat_eligibility.circom)
+  - [Vendored no_std Groth16 Verifier](https://github.com/tawf-labs/zkt-research/blob/main/solana/zkt_core/src/groth16.rs)
+  - [Circuit Build Guide + Trusted Setup](https://github.com/tawf-labs/zkt-research/blob/main/solana/circuits/README.md)
+  - Prove wealth ≥ nisab ∧ hawl elapsed under zero-knowledge (Poseidon nullifier, BN254, Groth16)
+  - **Papers the Groth16 verifier is based upon**
+    - [Light Protocol's groth16-solana](https://github.com/Lightprotocol/groth16-solana) (audited on-chain verifier)
 
-Tawf is built on the principle that legitimacy, transparency, and Sharia alignment must come before scale. This repository exists to:
+- **Trusted Setup Ceremony for Zakat Eligibility**
+  - [Ceremony Runbook](https://github.com/tawf-labs/zkt-research/blob/main/solana/circuits/CEREMONY.md)
+  - [Verification Key → Rust Converter](https://github.com/tawf-labs/zkt-research/blob/main/solana/circuits/vk_to_rust.js)
+  - Phase 1: Reuses Hermez/Powers of Tau (`powersOfTau28_hez_final_12.ptau`)
+  - Phase 2: Multi-party with Squads signers + optional Bitcoin block-hash beacon
+  - Security model: secure if ≥1 honest contributor
 
-* Document Sharia research relevant to Tawf products and protocols
-* Provide scholarly and practical references for Sharia-compliant Web3 development
-* Support governance, audits, and decision-making with verifiable sources
-* Ensure accountability and traceability in Sharia interpretations used by Tawf
+- **Architecture Decision Records**
+  - [ADR-0001: Quasar over Anchor for Solana](https://github.com/tawf-labs/zkt-research/blob/main/docs/adr/0001-quasar-over-anchor-for-solana-port.md)
+  - [ADR-0002: Groth16/Circom for the ZK layer](https://github.com/tawf-labs/zkt-research/blob/main/docs/adr/0002-groth16-circom-for-solana-zk-layer.md)
+  - [ADR-0003: Phase 1 Guarded Launch (Squads multisig)](https://github.com/tawf-labs/zkt-research/blob/main/docs/adr/0003-phase1-guarded-launch-squads-multisig.md)
+  - [ADR-0004: Fixing the Eligibility Predicate + Shielding Split](https://github.com/tawf-labs/zkt-research/blob/main/docs/adr/0004-phase2-zk-eligibility-predicate-and-shielding-split.md)
+  - [ADR-0005: Privacy Posture & Regulatory Positioning](https://github.com/tawf-labs/zkt-research/blob/main/docs/adr/0005-privacy-posture-and-regulatory-positioning.md)
+  - [ADR-0006: Recipient Privacy via Commitments](https://github.com/tawf-labs/zkt-research/blob/main/docs/adr/0006-recipient-privacy-commitment-for-zakat-disbursements.md)
 
-## 📚 Scope of Research
+- **Security Analysis**
+  - [In-House Audit of `zkt_core` (Solana Phase 1)](https://github.com/tawf-labs/zkt-research/blob/main/solana/SECURITY.md)
+  - Trust model, invariants, vulnerability-class audit (arbitrary CPI, PDA, signer, ownership, sysvar)
+  - [Fix: emergency pause bypassing organizer withdraw](https://github.com/tawf-labs/zkt-research/commit/6f5f8a5)
+  - [Security-Awareness Corrections for the IEEE Paper](https://github.com/tawf-labs/zkt-research/blob/main/security-analysis-corrections.md)
 
-This repository may include (but is not limited to):
+- **Sharia-Compliant Governance Model**
+  - Progressive decentralization: Admin Multisig → Sharia Council (off-chain → on-chain) → Community
+  - [Off-Chain ZK Coordinator for Sharia Council Voting](https://github.com/tawf-labs/zkt-research/blob/main/sc/offchain-coordinator/README.md)
+  - ShariaVoteAggregator circuit (Groth16); Docker + Supabase deployment
+  - Squads multisig administering Phase 1 organizer whitelist and config
 
-* Islamic finance and Sharia jurisprudence (fiqh muamalat)
-* Analysis of riba, gharar, maysir, and prohibited structures in Web3
-* Research on stablecoins, DeFi protocols, staking, and yield models
-* Sharia governance frameworks and audit methodologies
-* Technical research bridging smart contracts and Sharia compliance
-* Position papers, internal research notes, and external academic references
+- **Domain Model & Glossaries**
+  - [Canonical Terminology (CONTEXT.md)](https://github.com/tawf-labs/zkt-research/blob/main/CONTEXT.md)
+  - Resolves ambiguous terms: Pool vs Fallback Vault, Receipt vs Receipt NFT, Eligibility Proof vs KYC
+  - [System Architecture Diagrams](https://github.com/tawf-labs/zkt-research/tree/main/docs/diagrams)
 
-## 🧭 How This Repository Is Used
+- **Disaster Response & Emergency Zakat**
+  - [DRCP Integration](https://github.com/tawf-labs/zkt-research/blob/main/ZISWAF_DOCUMENTATION.md)
+  - Emergency campaign type with accelerated 7-day deadline
+  - Pool cap policy (~$300) for Phase 1 guarded launch
 
-* As a reference for Tawf protocol design and implementation
-* As supporting documentation for Sharia boards and advisors
-* As an open knowledge base for builders aligned with ethical and Islamic finance
-* As a transparency layer for the community and ecosystem partners
+## Links
 
-## 🗂 Repository Structure
-
-```
-/fiqh            # Core Sharia and jurisprudence research
-/defi            # DeFi-specific analysis and case studies
-/stablecoins     # Research on stable assets and monetary design
-/governance      # Sharia governance and compliance frameworks
-/papers          # External academic and industry papers
-/notes           # Internal research notes and working documents
-```
-
-## 🤝 Contributions
-
-Contributions are welcome from researchers, scholars, developers, and practitioners.
-
-Please ensure that:
-
-* Sources are clearly cited
-* Opinions are separated from established rulings
-* Research is written with neutrality, clarity, and academic integrity
-
-For major additions or interpretations, discussion via issues or proposals is encouraged.
-
-## ⚠️ Disclaimer
-
-Materials in this repository are provided for **research and educational purposes only**. They do not constitute formal fatwas unless explicitly stated. Final Sharia determinations for Tawf products are made through designated governance and advisory processes.
-
-## 🌐 About Tawf
-
-Tawf is building Sharia-compliant, trust-first Web3 infrastructure focused on ethical finance, transparency, and legitimacy.
-
-Learn more at: [https://tawf.xyz](https://tawf.xyz)
-
----
-
-**Maintained by the Tawf community.**
+- [Main Repository](https://github.com/tawf-labs/zkt-hackathon)
+- [Live Testnet](https://ziswaf.tawf.foundation)
+- [IEEE ICIMTech 2026 Paper](https://github.com/tawf-labs/zkt-research/blob/main/zk-private-zakat.pdf)
